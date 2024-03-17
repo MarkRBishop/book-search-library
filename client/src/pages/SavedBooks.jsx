@@ -28,15 +28,31 @@ const SavedBooks = () => {
   const userDataLength = Object.keys(userData).length;
 
 // create function that accepts the book's mongo _id value as param and deletes the book from the database
-  const handleDeleteBook = async (bookId) => {
-    
-    const user = await removeBook({
-      variables: {bookId: bookId}
+const handleDeleteBook = async (bookId) => {
+  const token = Auth.loggedIn() ? Auth.getToken() : null;
+
+  if (!token) {
+    return false;
+  }
+
+  try {
+    await removeBook({
+      variables: { bookId },
+      update: cache => {
+        const { me } = cache.readQuery({ query: GET_ME });
+        cache.writeQuery({
+          query: GET_ME,
+          data: { me: { ...me, savedBooks: me.savedBooks.filter(book => book.bookId !== bookId) } },
+        });
+      }
     });
 
-      removeBookId(bookId);
-  };
-
+    // Upon success, remove book's id from localStorage
+    removeBookId(bookId);
+  } catch (err) {
+    console.error(err);
+  }
+};
   if (!userDataLength) {
     return <h2>LOADING...</h2>;
   }
