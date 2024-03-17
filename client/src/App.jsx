@@ -7,12 +7,11 @@ import {
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { Outlet } from 'react-router-dom';
-
 import Navbar from './components/Navbar';
 
-const httpLink = createHttpLink(({
-  uri: '/graphql'
-}))
+const httpLink = createHttpLink({
+  uri: 'http://localhost:3001/graphql', // Specify the full URL of your GraphQL server
+});
 
 const authLink = setContext((_, { headers }) => {
   // get the authentication token from local storage if it exists
