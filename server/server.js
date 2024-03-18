@@ -17,11 +17,12 @@ const PORT = process.env.PORT || 3001;
 const startApolloServer = async () => {
   await server.start();
 
-  app.use(cors()); // Enable CORS middleware
-
   app.use(express.urlencoded({ extended: true }));
   app.use(express.json());
+  
+  app.use(cors()); // Enable CORS middleware
 
+  app.use(routes)
   app.use('/graphql', expressMiddleware(server, {
     context: authMiddleware
   }));
