@@ -15,7 +15,9 @@ import { removeBookId } from '../utils/localStorage';
 
 const SavedBooks = () => {
 
-  const [removeBook, { error }] = useMutation(REMOVE_BOOK);
+  const [removeBook, { error }] = useMutation(REMOVE_BOOK); {
+    refetchQueries: [{query : GET_ME}]
+  }
   
   const { loading, data } = useQuery(GET_ME, {
     variables: { _id: '' }
