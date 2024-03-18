@@ -2,7 +2,7 @@
 
 This is an application utilizing Apollo server and graphQL allowing a user to search books and save it to a book list attached to their account
 
-![book-search-library homepage]()
+![book-search-library homepage](https://github.com/MarkRBishop/book-search-library/blob/main/assets/book-search-library.png?raw=true)
 
 ## Links
 
